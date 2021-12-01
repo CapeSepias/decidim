@@ -58,12 +58,21 @@ module Decidim
           end
         end
       end
-    end
 
-    context "with a valid notification " do
-      describe "#display_resource_text" do
+      describe "#display_resource_text?" do
         it "returns false if the notification hasn't to display the content of the comment" do
           expect(subject.display_resource_text?).to eq(false)
+        end
+      end
+    end
+
+    context "with a valid comment notification" do
+      let(:notification) { create(:notification, :comment_notification) }
+      let(:subject) { described_class.new(notification) }
+
+      describe "#display_resource_text?" do
+        it "returns true if the notification has to display the content of the comment" do
+          expect(subject.display_resource_text?).to eq(true)
         end
       end
     end
