@@ -136,4 +136,20 @@ describe "Notifications", type: :system do
       expect(comment_notification).to have_content(comment_body)
     end
   end
+
+  context "with propopsal notifications" do
+    let(:proposal) { build(:proposal) }
+    let!(:notification) { create :notification, :proposal_notification, user: user, resource: proposal }
+
+    before do
+      resource.destroy!
+      page.visit decidim.notifications_path
+    end
+
+    it "shows the author in the proposal notification" do
+      proposal_notification = page.find(".card.card--widget")
+      author = proposal.coauthorships.first.author
+      expect(proposal_notification).to have_content("by #{author.name} @#{author.nickname}")
+    end
+  end
 end

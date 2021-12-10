@@ -606,6 +606,11 @@ FactoryBot.define do
       event_name { "decidim.events.comments.comment_created" }
       extra { { comment_id: create(:comment).id } }
     end
+
+    trait :proposal_notification do
+      event_class { "Decidim::Proposals::PublishProposalEvent" }
+      event_name { "decidim.events.proposals.proposal_published" }
+    end
   end
 
   factory :action_log, class: "Decidim::ActionLog" do
